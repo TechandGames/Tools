@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Convert Excel files to PDF documents instantly. Free online tool for XLSX to PDF conversion with multiple download options.">
+    <meta name="keywords" content="Excel to PDF, XLSX to PDF, convert Excel, PDF converter, online Excel tool">
+    <title>Excel to PDF Converter | Free Online Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #e74c3c;
+            --secondary-color: #f5f5f5;
+            --text-color: #333;
+            --light-text: #777;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-color);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .ad-container {
+            background-color: var(--secondary-color);
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 5px;
+            border: 1px dashed #ccc;
+        }
+
+        .main-content {
+            padding: 30px 0;
+        }
+
+        .tool-container {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .tool-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(231, 76, 60, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .options-section {
+            margin: 25px 0;
+        }
+
+        .option-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-option {
+            margin-right: 15px;
+        }
+
+        .preview-container {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        .preview-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .upload-area {
+                padding: 30px 15px;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            .tool-title {
+                font-size: 20px;
+            }
+            
+            .download-options {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Excel to PDF Converter</div>
+            <div class="tagline">Convert your Excel files to PDF documents in seconds</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Top Ad Space -->
+        <div class="ad-container">
+            <!-- Replace with your AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                crossorigin="anonymous"></script>
+            <!-- ExcelToPDF_Top -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                data-ad-slot="YOUR_AD_UNIT_ID_TOP"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <div class="main-content">
+            <div class="tool-container">
+                <h1 class="tool-title">Convert Excel to PDF</h1>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📊</div>
+                    <h3>Drag & Drop your Excel file here</h3>
+                    <p>or click to browse files</p>
+                    <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" style="display: none;">
+                </div>
+                
+                <div class="options-section" id="optionsSection" style="display: none;">
+                    <h3 class="option-title">Conversion Options</h3>
+                    
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="landscape" checked> Landscape orientation
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="fitToPage"> Fit to page width
+                        </label>
+                    </div>
+                    
+                    <div class="progress-container" id="progressContainer">
+                        <div class="progress-bar" id="progressBar">0%</div>
+                    </div>
+                    
+                    <div class="preview-container" id="previewContainer" style="display: none;">
+                        <h4 class="preview-title">Excel Data Preview</h4>
+                        <div id="dataPreview"></div>
+                    </div>
+                    
+                    <div class="download-section">
+                        <button class="btn" id="convertBtn">Convert to PDF</button>
+                        <button class="btn btn-outline" id="resetBtn">Reset</button>
+                        
+                        <div class="download-options" id="downloadOptions" style="display: none;">
+                            <button class="btn" id="downloadPdfBtn">
+                                <i class="fas fa-file-pdf"></i> Download PDF
+                            </button>
+                            <button class="btn btn-outline" id="downloadZipBtn">
+                                <i class="fas fa-file-archive"></i> Download as ZIP
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Ad Space -->
+        <div class="ad-container">
+            <!-- Replace with your AdSense code -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ADSENSE_ID"
+                crossorigin="anonymous"></script>
+            <!-- ExcelToPDF_Bottom -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-YOUR_ADSENSE_ID"
+                data-ad-slot="YOUR_AD_UNIT_ID_BOTTOM"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Excel to PDF Converter. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+        
+        // DOM elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const optionsSection = document.getElementById('optionsSection');
+        const previewContainer = document.getElementById('previewContainer');
+        const dataPreview = document.getElementById('dataPreview');
+        const convertBtn = document.getElementById('convertBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const downloadOptions = document.getElementById('downloadOptions');
+        const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+        const downloadZipBtn = document.getElementById('downloadZipBtn');
+        
+        let workbook = null;
+        let pdfData = [];
+        
+        // Event listeners
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                loadExcel(e.target.files[0]);
+            }
+        });
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = 'var(--primary-color)';
+            uploadArea.style.backgroundColor = 'rgba(231, 76, 60, 0.1)';
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.borderColor = '#ccc';
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#ccc';
+            uploadArea.style.backgroundColor = 'transparent';
+            
+            if (e.dataTransfer.files.length > 0) {
+                const file = e.dataTransfer.files[0];
+                if (file.name.match(/\.(xlsx|xls|csv)$/i)) {
+                    loadExcel(file);
+                } else {
+                    alert('Please upload an Excel file (XLSX, XLS, or CSV).');
+                }
+            }
+        });
+        
+        convertBtn.addEventListener('click', convertToPdf);
+        resetBtn.addEventListener('click', resetTool);
+        downloadPdfBtn.addEventListener('click', downloadAsPdf);
+        downloadZipBtn.addEventListener('click', downloadAsZip);
+        
+        // Functions
+        function loadExcel(file) {
+            const fileReader = new FileReader();
+            
+            fileReader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                
+                showProgress('Loading Excel file...', 30);
+                
+                try {
+                    workbook = XLSX.read(data, { type: 'array' });
+                    optionsSection.style.display = 'block';
+                    showProgress('Analyzing data...', 60);
+                    
+                    // Generate preview
+                    generatePreview(workbook);
+                    showProgress('Ready to convert', 100);
+                    
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                    }, 1000);
+                } catch (error) {
+                    showError('Error loading Excel file: ' + error.message);
+                }
+            };
+            
+            fileReader.readAsArrayBuffer(file);
+        }
+        
+        function generatePreview(wb) {
+            dataPreview.innerHTML = '';
+            
+            // Show first sheet by default
+            const firstSheetName = wb.SheetNames[0];
+            const worksheet = wb.Sheets[firstSheetName];
+            const html = XLSX.utils.sheet_to_html(worksheet);
+            
+            dataPreview.innerHTML = html;
+            previewContainer.style.display = 'block';
+        }
+        
+        function showProgress(message, percent) {
+            progressContainer.style.display = 'block';
+            progressBar.style.width = percent + '%';
+            progressBar.textContent = percent + '% - ' + message;
+        }
+        
+        function showError(message) {
+            progressBar.style.background = '#c0392b';
+            progressBar.textContent = 'Error: ' + message;
+            
+            setTimeout(() => {
+                progressContainer.style.display = 'none';
+            }, 3000);
+        }
+        
+        async function convertToPdf() {
+            if (!workbook) return;
+            
+            pdfData = [];
+            showProgress('Converting to PDF...', 10);
+            
+            try {
+                const landscape = document.getElementById('landscape').checked;
+                const fitToPage = document.getElementById('fitToPage').checked;
+                
+                // Process each sheet
+                for (let i = 0; i < workbook.SheetNames.length; i++) {
+                    const sheetName = workbook.SheetNames[i];
+                    const worksheet = workbook.Sheets[sheetName];
+                    
+                    // Convert sheet to JSON
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    // Create PDF
+                    const pdf = new jsPDF({
+                        orientation: landscape ? 'landscape' : 'portrait',
+                        unit: 'mm'
+                    });
+                    
+                    // Add title
+                    pdf.setFontSize(16);
+                    pdf.text(sheetName, 14, 10);
+                    
+                    // Convert to PDF using autoTable
+                    pdf.autoTable({
+                        head: [jsonData[0]],
+                        body: jsonData.slice(1),
+                        startY: 15,
+                        styles: { overflow: 'linebreak' },
+                        pageBreak: 'auto',
+                        tableWidth: fitToPage ? 'auto' : 'wrap',
+                        margin: { left: 10, right: 10 }
+                    });
+                    
+                    // Save PDF data
+                    pdfData.push({
+                        name: sheetName + '.pdf',
+                        data: pdf.output('blob')
+                    });
+                    
+                    // Update progress
+                    const progress = Math.min(10 + ((i + 1) / workbook.SheetNames.length) * 80, 90);
+                    showProgress(`Processing sheet ${i + 1} of ${workbook.SheetNames.length}...`, progress);
+                    
+                    // Small delay for smooth progress
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                
+                showProgress('Conversion complete!', 100);
+                downloadOptions.style.display = 'flex';
+                
+            } catch (error) {
+                showError('Conversion failed: ' + error.message);
+            }
+        }
+        
+        function downloadAsPdf() {
+            if (pdfData.length === 0) return;
+            
+            // For single sheet, download directly
+            if (pdfData.length === 1) {
+                saveAs(pdfData[0].data, pdfData[0].name);
+            } else {
+                // For multiple sheets, download first one
+                saveAs(pdfData[0].data, pdfData[0].name);
+            }
+        }
+        
+        async function downloadAsZip() {
+            if (pdfData.length === 0) return;
+            
+            showProgress('Creating ZIP archive...', 95);
+            
+            try {
+                const zip = new JSZip();
+                const folder = zip.folder('excel_to_pdf_conversion');
+                
+                // Add all PDFs to zip
+                pdfData.forEach(file => {
+                    folder.file(file.name, file.data);
+                });
+                
+                // Generate zip file
+                const content = await zip.generateAsync({ type: 'blob' });
+                saveAs(content, 'excel_conversion.zip');
+                
+                showProgress('ZIP download ready', 100);
+                
+            } catch (error) {
+                showError('ZIP creation failed: ' + error.message);
+            }
+        }
+        
+        function resetTool() {
+            fileInput.value = '';
+            workbook = null;
+            pdfData = [];
+            optionsSection.style.display = 'none';
+            previewContainer.style.display = 'none';
+            dataPreview.innerHTML = '';
+            progressContainer.style.display = 'none';
+            downloadOptions.style.display = 'none';
+            document.getElementById('landscape').checked = true;
+            document.getElementById('fitToPage').checked = false;
+        }
+    </script>
+</body>
+</html>
