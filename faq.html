@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tech & Tools FAQs - Funny, useful, and weird answers to your burning questions!">
+    <title>FAQs - Tech & Tools | Hilarious & Helpful Answers</title>
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --secondary: #c0392b;
+            --light: #ffffff;
+            --dark: #2c3e50;
+            --gray: #ecf0f1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.8rem;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-top: 40px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gray);
+        }
+        .faq-item {
+            margin-bottom: 25px;
+            background: var(--light);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+        .faq-question {
+            background: var(--primary);
+            color: var(--light);
+            padding: 15px 20px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .faq-question:hover {
+            background: var(--secondary);
+        }
+        .faq-answer {
+            padding: 20px;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        .faq-answer.show {
+            display: block;
+        }
+        .fun-fact {
+            background: #fdecea;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>FAQs 🤔</h1>
+            <p>Answers to questions you didn’t know you had (and some you definitely did)</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>General Questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Are these tools really free? No hidden fees?</div>
+            <div class="faq-answer">
+                <p><strong>Yes, 100% free!</strong> No "free trial" scams here. We don’t even ask for your firstborn child (unlike some other sites).</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> Our CEO once tried charging a pigeon for using a tool. The pigeon flew away. Lesson learned. 🕊️
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Why do I see ads if the tools are free?</div>
+            <div class="faq-answer">
+                <p><strong>Because magic isn’t real.</strong> Servers cost money, and our developers need coffee ☕ to stay awake. Ads help keep the lights on!</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> If we removed all ads, we’d have to replace them with cat memes. 🐱 You’ve been warned.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Can I use these tools for evil?</div>
+            <div class="faq-answer">
+                <p><strong>Only if your definition of "evil" is making life easier.</strong> No hacking, spamming, or annoying your ex. We have a strict "no supervillains" policy. 🦹‍♂️</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> One user tried to use our text converter to write a ransom note. It autocorrected to "Have a nice day!" 😂
+                </div>
+            </div>
+        </div>
+
+        <h2>Technical Stuff (For Nerds 🤓)</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Where does my data go when I use a tool?</div>
+            <div class="faq-answer">
+                <p><strong>Most tools process everything in your browser!</strong> Your secrets are safe (unless you’re using a public computer—then maybe don’t type your passwords here).</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> Our servers are guarded by an army of firewalls and one very grumpy IT guy named Steve. 🔒
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Why does the PDF converter hate my 1000-page document?</div>
+            <div class="faq-answer">
+                <p><strong>Because it has feelings too.</strong> Large files can crash tools. Try breaking it into smaller chunks (like your last breakup). 💔</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> One user tried converting "War and Peace." The tool replied: "I’m a tool, not a miracle worker." 📚
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Do you store my data?</div>
+            <div class="faq-answer">
+                <p><strong>Nope!</strong> We don’t keep your files, texts, or that embarrassing selfie you just cropped. Once you close the tab, it’s gone forever (like your ex’s number).</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> Our database is so empty, it echoes. 🗄️
+                </div>
+            </div>
+        </div>
+
+        <h2>Weird & Random Questions</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Can I marry your website?</div>
+            <div class="faq-answer">
+                <p><strong>Sorry, we’re in a committed relationship with the internet.</strong> But we appreciate the proposal! 💍</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> A user once sent us a love letter. We framed it in the office (next to the "Don’t Panic" sign). ❤️
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Why is there no "Make Me a Sandwich" tool?</div>
+            <div class="faq-answer">
+                <p><strong>Because we’re still working on teleportation tech.</strong> Until then, try the kitchen. 🥪</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> Our dev team once tried coding a sandwich generator. It just displayed "404 - Bread Not Found." 🍞
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleAnswer(this)">❓ Can your tools predict the future?</div>
+            <div class="faq-answer">
+                <p><strong>Yes! (Just kidding, no.)</strong> But if they could, we’d be too busy winning the lottery to run this site. 🎰</p>
+                <div class="fun-fact">
+                    <strong>Fun Fact:</strong> A user asked if our password generator could predict next week’s lottery numbers. It replied: "Nice try, FBI." 🕵️‍♂️
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-terms" style="text-align: center; margin-top: 40px; padding: 20px; background: var(--gray); border-radius: 8px;">
+            <h2>Still Have Questions?</h2>
+            <p>Contact us at <strong>help@techandtools.com</strong> or through our <a href="contact.html">Contact Page</a>. (We reply faster than your ex regrets their life choices.)</p>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle("show");
+        }
+    </script>
+</body>
+</html>
